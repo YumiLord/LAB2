@@ -26,75 +26,79 @@ namespace YourProjectNamespace
             loginPage.OpenLoginPage("https://www.globalsqa.com/angularJs-protractor/BankingProject"); // Замініть URL на реальний URL вашого веб-сайту
         }
 
-        [When(@"I select ""Login as User"" option")]
-        public void WhenISelectLoginAsUserOption()
+        [When(@"I select ""Login as Bank Manager"" option")]
+        public void WhenISelectLoginAsBankManagerOption()
         {
-            loginPage.ClickLoginAsUser();
+            loginPage.ClickLoginAsBankManager();
         }
 
-        [When(@"I select ""Hermoine Granger"" as a customer")]
-
-        public void WhenISelectHarryPotter() {
-            loginPage.SelectCustomer("Hermoine Granger");
+        [Then(@"I click ""Customers"" to see a list of customers")]
+        public void ClickCustomers() {
+            loginPage.ClickCustomers();
         }
 
-        [When(@"I click Login button")]
-
-        public void WhenIClickLoginButton()
+        [When(@"I search a peson by first name")]
+        public void SearchByFirstName()
         {
-            loginPage.ClickLogin();
+            loginPage.inputSearchKey("Hermoine");
         }
 
-        [Then(@"I should be on the bank's home page")]
-        public void ThenIShouldSeeTheMainDivBlock()
+        [Then(@"I should see a person with this first name")]
+        public void checkPesonWithFirstName()
         {
-            bool isMainDivVisible = loginPage.IsWelcomeTextVisible();
-            Assert.IsTrue(isMainDivVisible, "The 'mainBox' block is not visible.");
+            List<IWebElement> res = loginPage.checkPerson();
+            Assert.AreEqual(res[0].Text, "Hermoine","First names don't match");
+            Assert.AreEqual(res[1].Text, "Granger", "Last names don't match");
+            Assert.AreEqual(res[2].Text, "E859AB", "Postcodes don't match");
+            Assert.AreEqual(res[3].Text, "1001 1002 1003", "Account numbers don't match");
         }
 
-        [When(@"I click the Withdrawl button")]
-
-        public void WhenIClickWithdraw()
+        [When(@"I search a peson by last name")]
+        public void SearchByLastName()
         {
-            loginPage.OpenWithdrawMenu();
+            loginPage.inputSearchKey("Pot");
         }
 
-        [When(@"I enter the withdrawal amount as full sum / 2")]
-        public void EnterAmount()
+        [Then(@"I should see a person with this last name")]
+        public void checkPesonWithLastName()
         {
-            loginPage.EnterAmount();
+            List<IWebElement> res = loginPage.checkPerson();
+            Assert.AreEqual(res[0].Text, "Harry", "First names don't match");
+            Assert.AreEqual(res[1].Text, "Potter", "Last names don't match");
+            Assert.AreEqual(res[2].Text, "E725JB", "Postcodes don't match");
+            Assert.AreEqual(res[3].Text, "1004 1005 1006", "Account numbers don't match");
         }
 
-        [When(@"I click the ""Confirm Withdrawal"" button")]
-        public void ConfirmWithdraw()
+        [When(@"I search a peson by postcode")]
+        public void SearchByPostcode()
         {
-            loginPage.ClickWithdraw();
+            loginPage.inputSearchKey("E55555");
         }
 
-        [Then(@"I should see a success message")]
-        public void ThenIShouldSeeASucseedMessage()
+        [Then(@"I should see a person with this postcode")]
+        public void checkPesonWithPostcode()
         {
-            loginPage.IsSucseedTextVisible();
+            List<IWebElement> res = loginPage.checkPerson();
+            Assert.AreEqual(res[0].Text, "Ron", "First names don't match");
+            Assert.AreEqual(res[1].Text, "Weasly", "Last names don't match");
+            Assert.AreEqual(res[2].Text, "E55555", "Postcodes don't match");
+            Assert.AreEqual(res[3].Text, "1007 1008 1009", "Account numbers don't match");
         }
 
-        [When(@"I enter the withdrawal amount as full sum x 2")]
-
-        public void EnterMoreAmount()
+        [When(@"I search a peson by account number")]
+        public void SearchByAccountNumber()
         {
-            loginPage.EnterMoreAmount();
+            loginPage.inputSearchKey("1010");
         }
 
-        [When(@"I click the ""Confirm Withdrawal"" button again")]
-
-        public void ClickWithdrawAgain()
+        [Then(@"I should see a person with this account number")]
+        public void checkPesonWithAccountNumber()
         {
-            loginPage.ClickWithdraw();
-        }
-
-        [Then(@"I should see an error message")]
-        public void ThenIShoulSeeAnError()
-        {
-            loginPage.IsErrorTextVisible();
+            List<IWebElement> res = loginPage.checkPerson();
+            Assert.AreEqual(res[0].Text, "Albus", "First names don't match");
+            Assert.AreEqual(res[1].Text, "Dumbledore", "Last names don't match");
+            Assert.AreEqual(res[2].Text, "E55656", "Postcodes don't match");
+            Assert.AreEqual(res[3].Text, "1010 1011 1012", "Account numbers don't match");
         }
 
         [Then(@"I should close Chrome")]

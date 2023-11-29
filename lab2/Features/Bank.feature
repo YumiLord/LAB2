@@ -1,16 +1,16 @@
-﻿Feature: Withdraw Money
+﻿Feature: Customers
 
-  Scenario: Withdraw money from the account
+  Scenario: Search customer
     Given I am on the banking website
-    When I select "Login as User" option
-    And I select "Hermoine Granger" as a customer
-    And I click Login button
-    Then I should be on the bank's home page
-    When I click the Withdrawl button
-    And I enter the withdrawal amount as full sum / 2
-    And I click the "Confirm Withdrawal" button
-    Then I should see a success message
-    When I enter the withdrawal amount as full sum x 2
-    And I click the "Confirm Withdrawal" button again
-    Then I should see an error message
+    When I select "Login as Bank Manager" option
+    Then I click "Customers" to see a list of customers
+    When I search a peson by first name
+    Then I should see a person with this first name
+    When I search a peson by last name
+    Then I should see a person with this last name
+    When I search a peson by postcode
+    Then I should see a person with this postcode
+    When I search a peson by account number
+    Then I should see a person with this account number
+    #Then I should see an error message
     Then I should close Chrome
